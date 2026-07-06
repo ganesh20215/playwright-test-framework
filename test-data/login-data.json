@@ -1,0 +1,29 @@
+[
+        {
+        "username": "standard_user",
+        "password" : "secret_sauce",
+        "expect" : "sucess",
+        "tag" : "@smoke"
+    },
+
+        {
+        "username": "standard_user",
+        "password" : "Test",
+        "expect" : "fail",
+       "tag" : "@negative"
+    },
+
+        {
+        "username": "Test",
+        "password" : "secret_sauce",
+        "expect" : "fail",
+        "tag" : "@negative"
+    },
+
+        {
+        "username": "Test",
+        "password" : "Test",
+        "expect" : "fail",
+        "tag" : "@negative"
+    }
+]

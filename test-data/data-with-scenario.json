@@ -1,0 +1,16 @@
+
+{
+       "validLogin" :{
+        "username": "standard_user",
+        "password" : "secret_sauce",
+        "expect" : "sucess",
+        "tag" : "@smoke"
+    },
+
+
+    "invalidLogin" :{
+        "username": "standard_user",
+        "password" : "test",
+        "expect" : "fail"
+    }
+}
