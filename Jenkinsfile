@@ -34,7 +34,7 @@ pipeline {
     post {
         always {
                 sh 'mkdir -p /var/lib/jenkins/tmp || true'
-                withEnv(['JAVA_OPTS=-Djava.io.tmpdir=C:\ProgramData\Jenkins\temp']) {
+                withEnv(['JAVA_OPTS=-Djava.io.tmpdir=C:ProgramData\Jenkins\temp']) {
                 allure([
                     includeProperties: false,
                     jdk: '',
