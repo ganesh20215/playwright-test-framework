@@ -24,9 +24,7 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
                     sh """
-                      echo "Running tests on ENV=${params.ENV}"
-                      ENV=${params.ENV} \
-                      npx playwright test --grep ${params.TEST_TAG}
+                      npx playwright test
                     """
                 }
             }
@@ -36,7 +34,7 @@ pipeline {
     post {
         always {
                 sh 'mkdir -p /var/lib/jenkins/tmp || true'
-                withEnv(['JAVA_OPTS=-Djava.io.tmpdir=/var/lib/jenkins/tmp']) {
+                withEnv(['JAVA_OPTS=-Djava.io.tmpdir=C:\ProgramData\Jenkins\temp']) {
                 allure([
                     includeProperties: false,
                     jdk: '',
