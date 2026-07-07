@@ -1,31 +1,29 @@
 pipeline {
     agent any
-  
+
     stages {
 
         stage('Install Dependencies') {
             steps {
-                sh '''
-                  node -v
-                  npm -v
-                  npm ci --silent
-                  npx playwright install chromium
+                bat '''
+                    node -v
+                    npm -v
+                    npm ci --silent
+                    npx playwright install chromium
                 '''
             }
         }
 
         stage('Compile TypeScript') {
             steps {
-                sh 'npx tsc'
+                bat 'npx tsc'
             }
         }
 
         stage('Run Playwright Tests') {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
-                    sh """
-                      npx playwright test
-                    """
+                    bat 'npx playwright test'
                 }
             }
         }
@@ -33,15 +31,23 @@ pipeline {
 
     post {
         always {
-                sh 'mkdir -p /var/lib/jenkins/tmp || true'
-                withEnv(['JAVA_OPTS=-Djava.io.tmpdir=C:ProgramData\Jenkins\temp']) {
-                allure([
-                    includeProperties: false,
-                    jdk: '',
-                    results: [[path: 'allure-results']]
-                ])
+            script {
+                // Create temp directory if it doesn't exist
+                bat '''
+                    if not exist "C:\\ProgramData\\Jenkins\\temp" (
+                        mkdir "C:\\ProgramData\\Jenkins\\temp"
+                    )
+                '''
+
+                // Set JAVA_OPTS for this block
+                withEnv(['JAVA_OPTS=-Djava.io.tmpdir=C:/ProgramData/Jenkins/temp']) {
+                    allure(
+                        includeProperties: false,
+                        jdk: '',
+                        results: [[path: 'allure-results']]
+                    )
+                }
             }
         }
     }
-
 }
